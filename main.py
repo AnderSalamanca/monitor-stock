@@ -7,7 +7,7 @@ import sys
 # Configuración
 URL_OBJETIVO = "https://outlet-pc.es/collections/tarjetas-graficas" # Cambia esto a la categoría exacta que quieras
 ARCHIVO_DATOS = "vistos.json"
-WEBHOOK_URL = os.environ.get('https://discord.com/api/webhooks/1460568394154774630/dpTch_UBGcFA3RDiX368b4TosXYVc1GYoXpS54z9V5yzK-hX8mVtQw-fDQXPfozc0uEE')
+WEBHOOK_URL = os.environ.get('DISCORD_WEBHOOK')
 
 # Headers para parecer un navegador real (Importante para que no te bloqueen)
 headers = {
