@@ -1,0 +1,37 @@
+name: Monitor de Stock
+
+on:
+  schedule:
+    # Se ejecuta cada 15 minutos. 
+    # No lo pongas a menos de 5-10 min o GitHub podría bloquearte por abuso.
+    - cron: '*/15 * * * *' 
+  workflow_dispatch: # Permite ejecutarlo manualmente desde la web para probar
+
+jobs:
+  check_stock:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # IMPORTANTE: Permiso para guardar el archivo json
+
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v3
+
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Instalar librerías
+        run: pip install -r requirements.txt
+
+      - name: Ejecutar Script
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        run: python main.py
+
+      - name: Guardar cambios (Base de datos de productos vistos)
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Actualizar productos vistos [skip ci]"
+          file_pattern: "vistos.json"
